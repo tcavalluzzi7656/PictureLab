@@ -27,7 +27,52 @@ public class IntArrayWorker
     }
     return total;
   }
-  
+
+
+  public int getCount(int target)
+  {
+    int count=0;
+    for(int i=0;i<matrix.length;i++) {
+      for (int j = 0; j < matrix[i].length; j++) {
+        if (matrix[i][j] == target)
+        {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+
+  public  int getColTotal (int col)
+  {
+    int total = 0;
+    for(int i=0;i<matrix.length;i++)
+    {
+      total=total+matrix[i][col];
+    }
+    return total;
+  }
+
+
+
+
+
+
+  public int getLargest ()
+  {
+    int max = 0;
+    for(int i=0;i<matrix.length;i++) {
+      for (int j = 0; j < matrix[i].length; j++) {
+        if (matrix[i][j] > max)
+        {
+          max=matrix[i][j];
+        }
+      }
+    }
+    return max;
+  }
+
   /**
    * Method to return the total using a nested for-each loop
    * @return the total of the values in the array
