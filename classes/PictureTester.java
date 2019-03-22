@@ -66,7 +66,9 @@ public class PictureTester
     canvas.createCollage();
     canvas.explore();
   }
-  
+
+
+
   /** Method to test edgeDetection */
   public static void testEdgeDetection()
   {
@@ -91,11 +93,27 @@ public class PictureTester
     caterpillar.explore();
   }
 
+  public static void testMirrorDiagonal()
+  {
+    Picture caterpillar = new Picture("caterpillar.jpg");
+    caterpillar.explore();
+    caterpillar.mirrorDiagonal();
+    caterpillar.explore();
+  }
+
   public static void testMirrorHorizontal()
   {
     Picture caterpillar = new Picture("caterpillar.jpg");
     caterpillar.explore();
     caterpillar.mirrorHorizontal();
+    caterpillar.explore();
+  }
+
+  public static void testMirrorHorizontalBotToTop()
+  {
+    Picture caterpillar = new Picture("caterpillar.jpg");
+    caterpillar.explore();
+    caterpillar.mirrorHorizontalBotToTop();
     caterpillar.explore();
   }
   
@@ -116,6 +134,8 @@ public class PictureTester
     //testMirrorVertical();
     //testMirrorVerticalRightToLeft();
     //testMirrorHorizontal();
+    testMirrorDiagonal();
+    //testMirrorHorizontalBotToTop();
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
