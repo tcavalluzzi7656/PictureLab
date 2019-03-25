@@ -59,6 +59,10 @@ public class Picture extends SimplePicture
     // let the parent class do the copy
     super(copyPicture);
   }
+
+
+
+
   
   /**
    * Constructor that takes a buffered image
@@ -369,12 +373,33 @@ public class Picture extends SimplePicture
     }   
   }
 
+    public void copy(Picture fromPic,
+                     int startRow, int startCol, int endRow, int endCol)
+    {
+        Pixel fromPixel = null;
+        Pixel toPixel = null;
+        Pixel[][] toPixels = this.getPixels2D();
+        Pixel[][] fromPixels = fromPic.getPixels2D();
+        for (int fromRow = 0, toRow = startRow; fromRow < endRow && toRow < endRow; fromRow++, toRow++)
+        {
+            for (int fromCol = 0, toCol = startCol;
+                 fromCol < endCol &&
+                         toCol < endCol;
+                 fromCol++, toCol++)
+            {
+                fromPixel = fromPixels[fromRow][fromCol];
+                toPixel = toPixels[toRow][toCol];
+                toPixel.setColor(fromPixel.getColor());
+            }
+        }
+    }
+
   /** Method to create a collage of several pictures */
   public void createCollage()
   {
     Picture flower1 = new Picture("flower1.jpg");
     Picture flower2 = new Picture("flower2.jpg");
-    this.copy(flower1,0,0);
+    this.copy(flower1,0,0,50,50);
     this.copy(flower2,100,0);
     this.copy(flower1,200,0);
     Picture flowerNoBlue = new Picture(flower2);
@@ -385,7 +410,23 @@ public class Picture extends SimplePicture
     this.mirrorVertical();
     this.write("collage.jpg");
   }
-  
+
+
+    public void myCollage()
+    {
+        Picture flower1 = new Picture("kitten2.jpg");
+        Picture flower2 = new Picture("snowman.jpg");
+        this.copy(flower1,0,0,50,50);
+        this.copy(flower2,100,0);
+        this.copy(flower1,200,0);
+        Picture flowerNoBlue = new Picture(flower2);
+        flowerNoBlue.zeroBlue();
+        this.copy(flowerNoBlue,300,0);
+        this.copy(flower1,400,0);
+        this.copy(flower2,500,0);
+        this.mirrorDiagonal();
+        this.write("collage.jpg");
+    }
   
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
@@ -396,19 +437,34 @@ public class Picture extends SimplePicture
     Pixel rightPixel = null;
     Pixel[][] pixels = this.getPixels2D();
     Color rightColor = null;
+    Pixel bottomPixel=null;
+    Color bottomColor=null;
     for (int row = 0; row < pixels.length; row++)
     {
-      for (int col = 0; 
-           col < pixels[0].length-1; col++)
+      for (int col = 0; col < pixels[0].length-1; col++)
       {
+
         leftPixel = pixels[row][col];
+
         rightPixel = pixels[row][col+1];
         rightColor = rightPixel.getColor();
-        if (leftPixel.colorDistance(rightColor) > 
-            edgeDist)
-          leftPixel.setColor(Color.BLACK);
-        else
-          leftPixel.setColor(Color.WHITE);
+
+
+
+
+        if((row+1)<pixels.length) {
+            bottomPixel = pixels[row+1][col];
+            bottomColor = bottomPixel.getColor();
+
+        }
+
+          if (leftPixel.colorDistance(rightColor) >
+                  edgeDist||(leftPixel.colorDistance(bottomColor) > edgeDist))
+              leftPixel.setColor(Color.BLACK);
+          else
+              leftPixel.setColor(Color.WHITE);
+
+
       }
     }
   }
