@@ -88,6 +88,73 @@ public class Picture extends SimplePicture
     return output;
     
   }
+
+
+
+
+
+
+
+
+
+
+
+
+  /** FRQ METHODS */
+  public int getCountRedOverValue(int value)
+  {
+      int count=0;
+      Pixel[][] pixels=this.getPixels2D();
+      for(int i=0;i<pixels.length;i++)
+      {
+          for(int j=0;j<pixels[i].length;j++)
+          {
+              if(pixels[i][j].getRed()>value)
+              {
+                  count++;
+              }
+          }
+      }
+      return count;
+  }
+
+  public void setRedToHalfValueInTopHalf()
+  {
+      Pixel[][] pixels=this.getPixels2D();
+      for(int i=0;i<pixels.length/2;i++)
+      {
+          for(int j=0;j<pixels[i].length;j++)
+          {
+             pixels[i][j].setRed(pixels[i][j].getRed());
+          }
+      }
+  }
+
+  public void clearBlueOverValue(int value)
+  {
+      Pixel[][] pixels=this.getPixels2D();
+      for(int i=0;i<pixels.length;i++)
+      {
+          for(int j=0;j<pixels[i].length;j++)
+          {
+              if(pixels[i][j].getBlue()>value)
+              {
+                  pixels[i][j].setBlue(0);
+              }
+          }
+      }
+  }
+
+  public int[] getAverageForColumn(int col)
+    {
+        Pixel[][] pixels=this.getPixels2D();
+        int[] avg=new int[pixels.length];
+        for(int i=0;i<pixels.length;i++)
+        {
+            avg[i]=(pixels[i][col].getBlue()+pixels[i][col].getRed()+pixels[i][col].getGreen())/3;
+        }
+        return avg;
+    }
   
   /** Method to set the blue to 0 */
   public void zeroBlue()
